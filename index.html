@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Kajal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1b002a 0%, #05000a 100%);
+            overflow-x: hidden; scroll-behavior: smooth;
+        }
+
+        /* --- Blurry Floating Hearts --- */
+        .heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .bg-heart { position: absolute; bottom: -100px; color: rgba(255, 56, 96, 0.3); animation: floatUp linear forwards; }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- Section 1: Splash --- */
+        .splash-screen { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; z-index: 10; padding: 0 20px; text-align: center;}
+        .magical-text { font-family: 'Parisienne', cursive; font-size: 5.5rem; color: #fff; text-shadow: 0 0 10px #ff007f, 0 0 30px #ff007f; display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+        .letter-span { display: inline-block; opacity: 0; filter: blur(10px); transform: translateY(20px); animation: appearLetter 1.2s forwards; }
+        @keyframes appearLetter { to { opacity: 1; filter: blur(0); transform: translateY(0); } }
+
+        /* --- Racing Arrow Style --- */
+        .racing-arrow-container { display: flex; flex-direction: column; align-items: center; gap: 5px; z-index: 10; margin-top: 20px; }
+        .arrow-segment { 
+            width: 18px; height: 18px; 
+            border-bottom: 4px solid #00ffcc; border-right: 4px solid #00ffcc; 
+            transform: rotate(45deg); opacity: 0; 
+            animation: arrowFlow 1.5s infinite; 
+            filter: drop-shadow(0 0 8px #00ffcc); 
+        }
+        .arrow-segment:nth-child(2) { animation-delay: 0.2s; }
+        .arrow-segment:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes arrowFlow { 0% { opacity: 0; transform: rotate(45deg) translate(-5px, -5px); } 50% { opacity: 1; } 100% { opacity: 0; transform: rotate(45deg) translate(5px, 5px); } }
+
+        /* --- Section 2: Photo Stack --- */
+        .content-section { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; perspective: 1500px; z-index: 10; position: relative; }
+        .card-stack { position: relative; width: 280px; height: 380px; transform-style: preserve-3d; margin-bottom: 20px; }
+        .card { position: absolute; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.2); transition: all 1s ease-in-out; background: #222; }
+        .card-back-left { transform: translateX(-35%) translateZ(-200px) rotateY(25deg); filter: blur(8px) brightness(0.4); z-index: 5; }
+        .card-back-right { transform: translateX(35%) translateZ(-200px) rotateY(-25deg); filter: blur(8px) brightness(0.4); z-index: 5; }
+        .card-main { z-index: 20; transform: translateZ(100px); }
+        .card img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; transition: opacity 2s ease-in-out; }
+        .img-hidden { opacity: 0; }
+        .img-visible { opacity: 1; }
+        .photo-label { position: absolute; bottom: 0; width: 100%; text-align: center; color: white; font-family: 'Poppins', sans-serif; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 20px 0; font-size: 0.9rem; z-index: 25; font-weight: 300; }
+
+        /* --- Section 3: Modern Letter Box --- */
+        .letter-section { 
+            min-height: 80vh;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 10; 
+            position: relative; 
+            padding: 50px 15px 0 15px;
+        }
+        .envelope-wrapper { position: relative; cursor: pointer; transform-style: preserve-3d; transition: 0.8s; perspective: 1000px; max-width: 100%; }
+        .envelope { position: relative; width: 320px; height: 210px; background: linear-gradient(135deg, #ff3860 0%, #d4143a 100%); box-shadow: 0 20px 40px rgba(0,0,0,0.6); border-radius: 10px; margin: 0 auto; }
+        .envelope::before { content: ''; position: absolute; top: 0; z-index: 2; border-top: 110px solid #ff567e; border-left: 160px solid transparent; border-right: 160px solid transparent; transform-origin: top; transition: all 0.6s 0.6s ease; }
+        .envelope::after { content: ''; position: absolute; bottom: 0; width: 0; height: 0; border-bottom: 100px solid #ff3860; border-left: 160px solid #ff2a54; border-right: 160px solid #ff2a54; z-index: 2; border-radius: 0 0 10px 10px; }
+        .letter-card { position: absolute; bottom: 5px; left: 10px; width: 300px; height: 180px; background: #fff; border-radius: 8px; padding: 20px; box-sizing: border-box; transition: all 0.6s ease; z-index: 1; color: #333; font-family: 'Poppins', sans-serif; text-align: center; overflow: hidden; }
+        .envelope-wrapper.open .envelope::before { transform: rotateX(180deg); z-index: 0; }
+        .envelope-wrapper.open .letter-card { transform: translateY(-140px); z-index: 3; height: 300px; box-shadow: 0 -15px 35px rgba(0,0,0,0.3); }
+        .message-text { font-size: 0.85rem; line-height: 1.5; color: #444; margin-top: 10px; }
+        .click-hint { color: #fff; font-family: 'Poppins'; margin-top: 15px; font-size: 0.9rem; opacity: 0.8; animation: pulse 2s infinite; text-align: center; }
+
+        /* --- Section 4: Final Footer --- */
+        .final-footer {
+            padding-bottom: 60px;
+            text-align: center;
+            background: transparent;
+            position: relative;
+            z-index: 10;
+            margin-top: -40px; 
+        }
+        .footer-heart-img {
+            width: 140px;
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 127, 0.6));
+            animation: gentlePulse 3s infinite ease-in-out;
+            display: block;
+            margin: 0 auto;
+        }
+        .footer-msg {
+            font-family: 'Parisienne', cursive;
+            color: white;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px #ff3860;
+            margin-top: 5px;
+            padding: 0 10px;
+        }
+
+        /* --- MOBILE RESPONSIVE FIXES --- */
+        @media (max-width: 480px) {
+            .magical-text { font-size: 3.5rem; }
+            .card-stack { width: 240px; height: 320px; }
+            .card-back-left { transform: translateX(-25%) translateZ(-150px) rotateY(20deg); }
+            .card-back-right { transform: translateX(25%) translateZ(-150px) rotateY(-20deg); }
+            .envelope { width: 280px; height: 180px; }
+            .envelope::before { border-top-width: 90px; border-left-width: 140px; border-right-width: 140px; }
+            .envelope::after { border-bottom-width: 80px; border-left-width: 140px; border-right-width: 140px; }
+            .letter-card { width: 260px; height: 160px; left: 10px; }
+            .envelope-wrapper.open .letter-card { height: 280px; transform: translateY(-120px); }
+            .footer-heart-img { width: 120px; }
+            .footer-msg { font-size: 1.5rem; }
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="tay-hai-ankit-tiwari_yYSGggTJ.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="heart-bg" id="heartContainer"></div>
+
+    <section class="splash-screen">
+        <div class="magical-text" id="target-text"></div>
+        <div class="racing-arrow-container">
+            <div class="arrow-segment"></div>
+            <div class="arrow-segment"></div>
+            <div class="arrow-segment"></div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="card-stack">
+            <div class="card card-back-left"><img id="bgL" src="" alt=""></div>
+            <div class="card card-back-right"><img id="bgR" src="" alt=""></div>
+            <div class="card card-main">
+                <img id="photo1" src="" class="img-visible">
+                <img id="photo2" src="" class="img-hidden">
+                <div class="photo-label">Koi nahin Tumse Behtar Kajal ❤️</div>
+            </div>
+        </div>
+        <div class="racing-arrow-container">
+            <div class="arrow-segment"></div>
+            <div class="arrow-segment"></div>
+            <div class="arrow-segment"></div>
+        </div>
+    </section>
+
+    <section class="letter-section">
+        <div class="envelope-wrapper" onclick="this.classList.toggle('open')">
+            <div class="envelope">
+                <div class="letter-card">
+                    <h3 style="margin:0; color:#ff3860; font-family:'Parisienne'; font-size: 1.8rem;">Dear Kajal Happy Birthday,</h3>
+                    <div class="message-text">
+                        Aapki muskurahat meri duniya hai. Yeh chota sa letter box sirf ek bahana hai aapko yeh batane ka ki aap mere liye kitni special ho. 
+                        <br><br>
+                        Koi nahin tumse behtar tumse pyaara, Haan tumse zyaada mera koi nahin! I Love You. ❤️
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="click-hint">Click on the envelope to open your surprise</p>
+    </section>
+
+    <footer class="final-footer">
+        <img src="il_600x600.7041614228_gbee-removebg-preview.png" alt="Finger Heart" class="footer-heart-img">
+        <p class="footer-msg">Hamesha Muskuraate Rehna...</p>
+    </footer>
+
+    <script>
+        // --- MUSIC LOGIC ---
+        const audio = document.getElementById('bgMusic');
+        let musicStarted = false;
+
+        function startMusic() {
+            if (!musicStarted) {
+                setTimeout(() => {
+                    audio.play().catch(e => console.log("Audio play blocked by browser"));
+                }, 1000); // 3 seconds delay
+                musicStarted = true;
+            }
+        }
+
+        // Listen for the first click anywhere to bypass browser auto-play blocks
+        document.body.addEventListener('click', startMusic, { once: true });
+        document.body.addEventListener('touchstart', startMusic, { once: true });
+
+
+        // --- IMAGE & TEXT LOGIC ---
+        const images = [
+            "kajal.avif", 
+            "kajal2.jpeg",
+            "kajal.avif",
+            "kajal.avif"
+        ];
+        const p1 = document.getElementById('photo1'), p2 = document.getElementById('photo2');
+        const bL = document.getElementById('bgL'), bR = document.getElementById('bgR');
+
+        if(images.length > 0) {
+            p1.src = images[0]; bL.src = images[0];
+            bR.src = images[images.length > 1 ? 1 : 0];
+        }
+
+        let currentIndex = 0, activeLayer = 1;
+        setInterval(() => {
+            if(images.length < 2) return;
+            currentIndex = (currentIndex + 1) % images.length;
+            const nextImg = images[currentIndex];
+            if (activeLayer === 1) {
+                p2.src = nextImg;
+                p1.classList.replace('img-visible', 'img-hidden');
+                p2.classList.replace('img-hidden', 'img-visible');
+                activeLayer = 2;
+            } else {
+                p1.src = nextImg;
+                p2.classList.replace('img-visible', 'img-hidden');
+                p1.classList.replace('img-hidden', 'img-visible');
+                activeLayer = 1;
+            }
+        }, 5000);
+
+        const nameText = "Dear Kajal";
+        const targetText = document.getElementById('target-text');
+        nameText.split('').forEach((char, index) => {
+            const span = document.createElement('span');
+            span.textContent = char === " " ? "\u00A0" : char;
+            span.className = 'letter-span';
+            span.style.animationDelay = `${index * 0.15}s`;
+            targetText.appendChild(span);
+        });
+
+        function createHeart() {
+            const hC = document.getElementById('heartContainer');
+            const h = document.createElement('div');
+            h.className = 'bg-heart'; h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 30 + 10) + 'px';
+            h.style.filter = `blur(${Math.random() * 5 + 1}px)`;
+            const dur = Math.random() * 6 + 4;
+            h.style.animationDuration = dur + 's';
+            hC.appendChild(h);
+            setTimeout(() => h.remove(), dur * 1000);
+        }
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
